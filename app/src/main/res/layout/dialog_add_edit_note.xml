@@ -7,6 +7,9 @@
         <variable
             name="note"
             type="in.mrasif.dev.mvvmdemo.models.Note" />
+        <variable
+            name="isNew"
+            type="boolean"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:titleTextColor="@color/colorToolbarText"
-                app:title="Add Note" />
+                app:title="@{isNew?@string/add_note:@string/edit_note}" />
         </android.support.design.widget.AppBarLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,6 +39,8 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:lines="1"
+                android:enabled="@{isNew}"
+                android:hint="Title"
                 android:text="@={note.title}" />
             <TextView
                 android:layout_width="match_parent"
@@ -47,6 +52,7 @@
                 android:lines="4"
                 android:singleLine="false"
                 android:gravity="start|top"
+                android:hint="Description"
                 android:text="@={note.description}"/>
             <Button
                 android:id="@+id/btnSave"
@@ -55,7 +61,7 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorToolbarText"
                 android:layout_gravity="right"
-                android:text="Save"/>
+                android:text="@{isNew?@string/save:@string/update}"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -1,5 +1,7 @@
 package in.mrasif.dev.mvvmdemo.models;
 
+import java.util.Objects;
+
 public class Note {
     private int id;
     private String title;
@@ -30,6 +32,19 @@ public class Note {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return Objects.equals(title, note.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);
     }
 
     @Override

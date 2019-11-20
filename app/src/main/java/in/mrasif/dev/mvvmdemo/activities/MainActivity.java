@@ -9,7 +9,7 @@ import android.os.Bundle;
 import in.mrasif.dev.mvvmdemo.R;
 import in.mrasif.dev.mvvmdemo.adapters.NoteAdapter;
 import in.mrasif.dev.mvvmdemo.databinding.ActivityMainBinding;
-import in.mrasif.dev.mvvmdemo.dialogs.AddNoteDialog;
+import in.mrasif.dev.mvvmdemo.dialogs.AddEditNoteDialog;
 import in.mrasif.dev.mvvmdemo.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,18 +17,18 @@ public class MainActivity extends AppCompatActivity {
 
     private NoteAdapter adapter;
     private ProgressDialog pdIsAdding;
-    private AddNoteDialog addNoteDialog;
+    private AddEditNoteDialog addEditNoteDialog;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        MainViewModel model= ViewModelProviders.of(this).get(MainViewModel.class);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
-        adapter=new NoteAdapter(this);
+        adapter=new NoteAdapter(this, model);
         binding.setAdapter(adapter);
 
-        MainViewModel model= ViewModelProviders.of(this).get(MainViewModel.class);
         model.getNotes().observe(this,notes -> {
             adapter.update(notes);
         });
@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.fabAdd.setOnClickListener(view -> {
-            addNoteDialog=new AddNoteDialog(this,model);
-            addNoteDialog.show();
+            addEditNoteDialog =new AddEditNoteDialog(this,model);
+            addEditNoteDialog.show();
         });
     }
 }
