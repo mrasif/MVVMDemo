@@ -12,16 +12,20 @@ import java.util.List;
 
 import in.mrasif.dev.mvvmdemo.R;
 import in.mrasif.dev.mvvmdemo.databinding.ItemNoteBinding;
+import in.mrasif.dev.mvvmdemo.dialogs.AddEditNoteDialog;
 import in.mrasif.dev.mvvmdemo.models.Note;
+import in.mrasif.dev.mvvmdemo.viewmodels.MainViewModel;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private Context context;
     private List<Note> notes;
+    private MainViewModel model;
 
-    public NoteAdapter(Context context) {
+    public NoteAdapter(Context context, MainViewModel model) {
         this.context=context;
         this.notes = new ArrayList<>();
+        this.model=model;
     }
 
     public void update(List<Note> notes){
@@ -39,6 +43,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Note note=notes.get(position);
         holder.binding.setNote(note);
+        holder.binding.cvNote.setOnClickListener(view -> {
+            AddEditNoteDialog dialog=new AddEditNoteDialog(context,model,note);
+            dialog.show();
+        });
     }
 
     @Override
